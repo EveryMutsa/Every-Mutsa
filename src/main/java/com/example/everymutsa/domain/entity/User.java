@@ -10,6 +10,7 @@ import java.util.List;
 @Entity
 @Table(name = "user")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -46,5 +47,4 @@ public class User {
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
     }
-
 }
