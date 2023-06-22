@@ -1,8 +1,7 @@
-package com.example.everymutsa.controller;
+package com.example.everymutsa.member.controller;
 
-import com.example.everymutsa.domain.dto.UserDTO;
-import com.example.everymutsa.domain.entity.User;
-import com.example.everymutsa.service.UserSerivce;
+import com.example.everymutsa.member.domain.entity.User;
+import com.example.everymutsa.member.service.UserSerivce;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

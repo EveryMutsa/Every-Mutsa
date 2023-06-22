@@ -1,4 +1,4 @@
-package com.example.everymutsa.domain.enums;
+package com.example.everymutsa.member.domain.enums;
 
 /**
  * 참고용
