@@ -1,6 +1,6 @@
-package com.example.everymutsa.repository;
+package com.example.everymutsa.member.repository;
 
-import com.example.everymutsa.domain.entity.User;
+import com.example.everymutsa.member.domain.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
