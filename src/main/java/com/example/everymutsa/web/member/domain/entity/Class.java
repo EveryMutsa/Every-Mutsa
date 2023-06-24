@@ -1,4 +1,4 @@
-package com.example.everymutsa.member.domain.entity;
+package com.example.everymutsa.web.member.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
