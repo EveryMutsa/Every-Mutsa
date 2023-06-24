@@ -1,4 +1,4 @@
-package com.example.everymutsa.member.domain.entity;
+package com.example.everymutsa.web.user.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -32,9 +32,9 @@ public class User {
     @Column(name = "accessed_at", length = 32, nullable = false)
     private LocalDateTime role;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "class", nullable = false)
-    private com.example.everymutsa.member.domain.entity.Class Class;
+    // @ManyToOne(fetch = FetchType.LAZY)
+    // @JoinColumn(name = "class", nullable = false)
+    // private com.example.everymutsa.web.member.domain.entity.Class Class;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
