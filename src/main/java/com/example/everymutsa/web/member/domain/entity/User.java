@@ -1,4 +1,4 @@
-package com.example.everymutsa.member.domain.entity;
+package com.example.everymutsa.web.member.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -34,7 +34,7 @@ public class User {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "class", nullable = false)
-    private com.example.everymutsa.member.domain.entity.Class Class;
+    private com.example.everymutsa.web.member.domain.entity.Class Class;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;

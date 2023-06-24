@@ -1,7 +1,8 @@
-package com.example.everymutsa.member.service;
+package com.example.everymutsa.web.member.service;
 
-import com.example.everymutsa.member.domain.entity.User;
-import com.example.everymutsa.member.repository.UserRepository;
+import com.example.everymutsa.web.member.domain.entity.User;
+import com.example.everymutsa.web.member.repository.UserRepository;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
