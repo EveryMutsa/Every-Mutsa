@@ -1,5 +1,6 @@
 package com.example.everymutsa.web.post.domain.dto;
 
+
 import com.example.everymutsa.web.post.domain.entity.Post;
 
 import lombok.AccessLevel;
@@ -25,6 +26,7 @@ public class PostParam {
 		this.image = image;
 		this.heart = heart;
 	}
+
 
 	public static PostParam createFromPost(Post post) {
 		PostParam npp = new PostParam();
