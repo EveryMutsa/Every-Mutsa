@@ -50,6 +50,17 @@ public class Post {
 		return post;
 	}
 
+	public static Post updateByParam(Post post, PostParam postParam) {
+
+		post.setTitle(postParam.getTitle());
+		post.setContent(postParam.getContent());
+		post.setCode(postParam.getCode());
+		post.setLanguage(postParam.getLanguage());
+		post.setImage(postParam.getImage());
+		post.setHeart(postParam.getHeart());
+		return post;
+	}
+
 	/*
 	created_at, updated_at : BaseEntity 로 상속받을 예정
 	 */

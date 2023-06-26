@@ -1,6 +1,7 @@
 package com.example.everymutsa.web.post.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +25,13 @@ public class PostService {
 		postRepository.save(post);
 
 		return post.getId();
+	}
+
+	@Transactional
+	public PostParam update(Long id, PostParam postParam) {
+		Post findPost = postRepository.findById(id).get();
+		findPost = Post.updateByParam(findPost, postParam);
+		return PostParam.createFromPost(findPost);
 	}
 
 	@Transactional
