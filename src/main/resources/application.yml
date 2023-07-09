@@ -23,7 +23,7 @@ spring:
         registration:
           kakao:
             client-id: ENC(FCwEwQzwVlKNyejsyzlwLDjp/HQLjWyr0ACh6r1Rr4pwkT/ffxRsoRRHLHPnvgDM)
-            redirect-uri: http://localhost:8080/auth/login/oauth2/code/kakao
+            redirect-uri: http://localhost:8080/api/oauth2/callback/kakao
             client-authentication-method: client_secret_post
             authorization-grant-type: authorization_code
             client-name: Kakao
@@ -33,7 +33,7 @@ spring:
           google:
             client-id: ENC(mNXcRDTVnYJ0dU7GHYenFtiEXH+0vLP/njsbbHClhbhEsTBCeIFe5qXsl/3qNHPwuN53hd1KBjKOLQSr+LDmxgKbrwujnGg2oUhPuFrjfm1nWA5THulgxg==)
             client-secret: ENC(B/FrNXOrDgGD5rbJVWHYW3oYsPoNuw7cjK8ge0Jx16PaaUyxjVcqYH1u7dtEswhN)
-            redirect-uri: http://localhost:8080/auth/login/oauth2/code/google
+            redirect-uri: http://localhost:8080/api/oauth2/callback/google
             client-name: Google
             scope:
               - email

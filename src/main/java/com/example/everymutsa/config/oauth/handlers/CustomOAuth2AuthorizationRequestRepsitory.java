@@ -2,6 +2,7 @@ package com.example.everymutsa.config.oauth.handlers;
 
 import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
+import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import com.example.everymutsa.utils.CookieUtils;
@@ -10,6 +11,7 @@ import io.jsonwebtoken.lang.Assert;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+@Repository
 public class CustomOAuth2AuthorizationRequestRepsitory
 	implements AuthorizationRequestRepository<OAuth2AuthorizationRequest> {
 

@@ -18,6 +18,8 @@ import com.example.everymutsa.config.jwt.JwtAuthTokenFilter;
 import com.example.everymutsa.config.jwt.JwtAuthenticationEntryPoint;
 import com.example.everymutsa.config.jwt.JwtTokenProvider;
 import com.example.everymutsa.config.oauth.CustomOAuth2AuthorizationService;
+import com.example.everymutsa.config.oauth.handlers.CustomOAuth2AuthenticationSuccessHandler;
+import com.example.everymutsa.config.oauth.handlers.CustomOAuth2AuthorizationRequestRepsitory;
 
 import lombok.RequiredArgsConstructor;
 
@@ -28,6 +30,8 @@ public class SecurityConfig {
 
 	private final JwtTokenProvider tokenProvider;
 	private final CustomOAuth2AuthorizationService oAuth2AuthorizationService;
+	private final CustomOAuth2AuthorizationRequestRepsitory customOAuth2AuthorizationRequestRepsitory;
+	private final CustomOAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
 	private final JwtAccessDeniedHandler accessDeniedHandler;
 	private final JwtAuthenticationEntryPoint authenticationEntryPoint;
 
@@ -41,30 +45,27 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(final HttpSecurity http) throws Exception {
-		return http
-			//.securityMatcher("/api/**")
+		return http.securityMatcher("/api/**")
 			.csrf(AbstractHttpConfigurer::disable)
-			.authorizeHttpRequests(
-				auth -> auth
-					.requestMatchers("/api/auth/**", "/api/docs/**", "/auth/**").permitAll()
-					.anyRequest().authenticated())
-			.sessionManagement(
-				session -> session
-					.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-			.exceptionHandling(exception -> exception
+			.authorizeHttpRequests(auth -> auth
+				.requestMatchers("/api/auth/**", "/api/oauth2/**").permitAll()
+				.requestMatchers("/api/hello/**").hasRole("ADMIN")
+				.anyRequest().authenticated())
+			.exceptionHandling(handler -> handler
 				.authenticationEntryPoint(authenticationEntryPoint)
 				.accessDeniedHandler(accessDeniedHandler))
+			.sessionManagement(session -> session
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.addFilterBefore(new JwtAuthTokenFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class)
-			.oauth2Login(
-				oauth -> oauth
-					.authorizationEndpoint(
-						authorization -> authorization.baseUri("/auth/login/oauth2/authorize")
-					)
-					.redirectionEndpoint(
-						redirection -> redirection.baseUri("/auth/login/oauth2/code/{code}")
-					)
-					.userInfoEndpoint(userInfo -> userInfo.userService(oAuth2AuthorizationService))
-			)
+			.oauth2Login(oauth2 -> oauth2
+				.userInfoEndpoint(userInfo -> userInfo
+					.userService(oAuth2AuthorizationService))
+				.authorizationEndpoint(auth -> auth
+					.baseUri("/api/oauth2/authorize")
+					.authorizationRequestRepository(customOAuth2AuthorizationRequestRepsitory))
+				.redirectionEndpoint(redirection -> redirection
+					.baseUri("/api/oauth2/callback/{registrationId}"))
+				.successHandler(oAuth2AuthenticationSuccessHandler))
 			.build();
 	}
 
