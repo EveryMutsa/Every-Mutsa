@@ -1,0 +1,64 @@
+spring:
+  # H2 Setting Info (H2 Console에 접속하기 위한 설정정보 입력)
+  h2:
+    console:
+      enabled: true  # H2 Console을 사용할지 여부 (H2 Console은 H2 Database를 UI로 제공해주는 기능)
+      path: /h2-console  # H2 Console의 Path
+  # Database Setting Info (Database를 H2로 사용하기 위해 H2연결 정보 입력)
+  datasource:
+    driver-class-name: org.h2.Driver  # Database를 H2로 사용하겠다.
+    url: jdbc:h2:mem:test  # H2 접속 정보
+    username: sa  # H2 접속 시 입력할 username 정보 (원하는 것으로 입력)
+    password:  # H2 접속 시 입력할 password 정보 (원하는 것으로 입력)
+  data:
+    redis:
+      host: localhost
+      port: 6379
+  docker:
+    compose:
+      file: ./redis/compose.yml
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-id: ENC(FCwEwQzwVlKNyejsyzlwLDjp/HQLjWyr0ACh6r1Rr4pwkT/ffxRsoRRHLHPnvgDM)
+            redirect-uri: http://localhost:8080/auth/login/oauth2/code/kakao
+            client-authentication-method: client_secret_post
+            authorization-grant-type: authorization_code
+            client-name: Kakao
+            scope:
+              - profile_nickname
+              - account_email
+          google:
+            client-id: ENC(mNXcRDTVnYJ0dU7GHYenFtiEXH+0vLP/njsbbHClhbhEsTBCeIFe5qXsl/3qNHPwuN53hd1KBjKOLQSr+LDmxgKbrwujnGg2oUhPuFrjfm1nWA5THulgxg==)
+            client-secret: ENC(B/FrNXOrDgGD5rbJVWHYW3oYsPoNuw7cjK8ge0Jx16PaaUyxjVcqYH1u7dtEswhN)
+            redirect-uri: http://localhost:8080/auth/login/oauth2/code/google
+            client-name: Google
+            scope:
+              - email
+              - profile
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+app:
+  oauth2:
+    authorized-redirect-uris:
+      - "http://localhost:3000/redirect"
+
+file:
+  upload-dir: C:\Users\dbrkd\GitFolder\teamproject\EveryMutsa
+security:
+  jwt:
+    base-64-secret: ENC(HOGdpg7soWdfZ7FKWBo3A7TczdeF3O97Tg2sRuM81nriyLye9sTKSvDiqMv8XfZeBd9+INyUPUjAg/izOhc88uTQ5e+xi30vnYiHpr6QWc2ZggTtA+Ro6fxUqOyjcdq3EqtfpG12Dhrqnn/yzR4mrdfS16y+NRe91+EfavlI3ZyN2gumqlJNxA1GRRG+e3iglzvsnYirszw=)
+    refresh-expiration-time: 604800000
+    access-expiration-time: 85400000
+jasypt:
+  encryptor:
+    algorithm: PBEWithMD5AndDES
+    iv-generator-classname: org.jasypt.iv.NoIvGenerator
+    password: ${EVERY_MUTSA_JASYPT}
+
