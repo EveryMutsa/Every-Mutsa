@@ -1,4 +1,4 @@
-package com.example.everymutsa.web.user.domain;
+package com.example.everymutsa.web.member.domain;
 
 import java.time.LocalDateTime;
 
@@ -20,8 +20,8 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(name = "users")
-public class User {
+@Table(name = "member")
+public class Member {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,7 +60,7 @@ public class User {
 	}
 
 	@Builder
-	public User(String password, String name, String email, String nickName, LocalDateTime accessedAt,
+	public Member(String password, String name, String email, String nickName, LocalDateTime accessedAt,
 		String hashedProfile,
 		Role role) {
 		this.password = password;
