@@ -1,4 +1,4 @@
-package com.example.everymutsa.web.user.dto;
+package com.example.everymutsa.web.member.dto;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -6,13 +6,13 @@ import lombok.Builder;
 import lombok.Data;
 
 @Data
-public class UserUpdateRequest {
+public class MemberUpdateRequest {
 	String name;
 	String nickName;
 	MultipartFile profileImage;
 
 	@Builder
-	public UserUpdateRequest(String name, String nickName, MultipartFile profileImage) {
+	public MemberUpdateRequest(String name, String nickName, MultipartFile profileImage) {
 		this.name = name;
 		this.nickName = nickName;
 		this.profileImage = profileImage;

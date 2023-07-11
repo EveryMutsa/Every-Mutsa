@@ -3,10 +3,10 @@ package com.example.everymutsa.common.fixture;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import com.example.everymutsa.web.user.domain.Role;
-import com.example.everymutsa.web.user.domain.User;
-import com.example.everymutsa.web.user.dto.UserSaveRequest;
-import com.example.everymutsa.web.user.dto.UserUpdateRequest;
+import com.example.everymutsa.api.auth.dto.SignUpRequest;
+import com.example.everymutsa.web.member.domain.Member;
+import com.example.everymutsa.web.member.domain.Role;
+import com.example.everymutsa.web.member.dto.MemberUpdateRequest;
 
 public class UserFixture {
 	public static final Long TEST_ID = 1L;
@@ -27,15 +27,15 @@ public class UserFixture {
 		"test_imagefile.png",
 		"application/x-www-form-urlencoded", "profile.png".getBytes());
 
-	public static final UserUpdateRequest TEST_UPDATE_USER_REQUEST = UserUpdateRequest
+	public static final MemberUpdateRequest TEST_UPDATE_USER_REQUEST = MemberUpdateRequest
 		.builder()
 		.name(TEST_UPDATE_NAME)
 		.nickName(TEST_UPDATE_NICK_NAME)
 		.profileImage(TEST_UPDATE_IMAGE_FILE)
 		.build();
 
-	public static User createUser() {
-		return User.builder()
+	public static Member createUser() {
+		return Member.builder()
 			.name(TEST_NAME)
 			.nickName(TEST_NICK_NAME)
 			.email(TEST_EMAIL)
@@ -45,7 +45,7 @@ public class UserFixture {
 			.build();
 	}
 
-	public static final UserSaveRequest TEST_USER_REQUEST = UserSaveRequest.builder()
+	public static final SignUpRequest TEST_USER_REQUEST = SignUpRequest.builder()
 		.name(TEST_NAME)
 		.email(TEST_EMAIL)
 		.password(TEST_PASSWORD)
@@ -53,7 +53,7 @@ public class UserFixture {
 		.profileImage(TEST_IMAGE_FILE)
 		.build();
 
-	public static final User TEST_USER = User.builder()
+	public static final Member TEST_MEMBER = Member.builder()
 		.name(TEST_NAME)
 		.nickName(TEST_NICK_NAME)
 		.email(TEST_EMAIL)
@@ -62,7 +62,7 @@ public class UserFixture {
 		.role(TEST_ROLE)
 		.build();
 
-	public static User createUserWithId(Long id) {
+	public static Member createUserWithId(Long id) {
 		var user = createUser();
 		ReflectionTestUtils.setField(user, "id", id);
 		return user;
