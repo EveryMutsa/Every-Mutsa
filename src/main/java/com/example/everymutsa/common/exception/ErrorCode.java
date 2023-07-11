@@ -14,7 +14,11 @@ public enum ErrorCode {
 	FILE_SIZE_ZERO(HttpStatus.BAD_REQUEST, "F_005", "파일 크기가 0입니다."),
 	INVALID_INPUT_VALUE(HttpStatus.BAD_REQUEST, "S_002", "잘못된 요청 값입니다."),
 	FILE_NOT_FOUND(HttpStatus.NOT_FOUND, "F_006", "파일을 찾을 수 없습니다."),
-	DUPLICATED_EMAIL(HttpStatus.BAD_REQUEST, "AU_001", "이미 사용중인 이메일입니다.");
+	DUPLICATED_EMAIL(HttpStatus.BAD_REQUEST, "AU_001", "이미 사용중인 이메일입니다."),
+	REFRESH_TOKEN_INVALID(HttpStatus.BAD_REQUEST, "AU_002", "유효하지 않은 토큰입니다."),
+	UNSUPPORTED_OAUTH2_PROVIDER(HttpStatus.NOT_ACCEPTABLE, "AU_003", "지원하지 않는 로그인 수단입니다."),
+	SERIALIZE_FAILURE(HttpStatus.NOT_IMPLEMENTED, "I_001", "직렬화 실패"),
+	DESERIALIZE_FAILURE(HttpStatus.NOT_IMPLEMENTED, "I_002", "역직렬화 실패");
 
 	ErrorCode(HttpStatus httpStatus, String code, String message) {
 		this.httpStatus = httpStatus;
