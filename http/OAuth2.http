@@ -1,3 +1,0 @@
-### 사용자가 OAuth 인증을 선택할시 선택한 제공자의 로그인 화면을 볼 수 있다.
-
-GET http://localhost:8080/auth/login/oauth2/authorize/kakao
