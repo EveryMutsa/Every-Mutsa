@@ -1,4 +1,6 @@
-package com.example.everymutsa.web.comment.domain;
+package com.example.everymutsa.web.comment.domain.entity;
+
+import java.time.Instant;
 
 import com.example.everymutsa.common.BaseEntity;
 import com.example.everymutsa.web.member.domain.Member;
@@ -32,6 +34,10 @@ public class Comment extends BaseEntity {
 
 	@Builder
 	public Comment(String content) {
+		this.content = content;
+	}
+
+	public void update(String content) {
 		this.content = content;
 	}
 
