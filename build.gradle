@@ -27,6 +27,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'com.h2database:h2:2.1.214'
     compileOnly 'org.projectlombok:lombok'
+    implementation 'org.projectlombok:lombok'
     runtimeOnly 'com.mysql:mysql-connector-j'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -45,6 +46,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+
+    testAnnotationProcessor 'org.projectlombok:lombok' //추가
 }
 
 tasks.named('test') {

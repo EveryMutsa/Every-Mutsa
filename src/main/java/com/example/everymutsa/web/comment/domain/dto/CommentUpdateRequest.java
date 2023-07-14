@@ -6,7 +6,7 @@ import lombok.Data;
 public class CommentUpdateRequest {
 	private String content;
 
-	public CommentUpdateRequest(String Content) {
+	public CommentUpdateRequest(String content) {
 		this.content = content;
 	}
 }
