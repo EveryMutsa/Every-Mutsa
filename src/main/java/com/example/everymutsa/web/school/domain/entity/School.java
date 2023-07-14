@@ -30,12 +30,12 @@ public class School extends BaseEntity {
     private Integer pace; // 수업 속도
 
     // Default Value
-    @Column(length = 125)
+    @Column(length = 255)
     private String discord;
-    @Column(length = 125)
+    @Column(length = 255)
     private String notion;
 
-    public static School createPost(SchoolDto dto) {
+    public static School toEntity(SchoolDto dto) {
         School school = new School();
         school.setId(dto.getId());
         school.setName(dto.getName());

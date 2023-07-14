@@ -1,5 +1,6 @@
 package com.example.everymutsa.web.school.domain.dto;
 
+import com.example.everymutsa.web.school.domain.entity.School;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,5 +28,18 @@ public class SchoolDto {
         this.pace = pace;
         this.discord = discord;
         this.notion = notion;
+    }
+
+    public static SchoolDto fromEntity(School school) {
+        SchoolDto dto = new SchoolDto();
+        dto.id = school.getId();
+        dto.name = school.getName();
+        dto.period = school.getPeriod();
+        dto.total = school.getTotal();
+        dto.completed = school.getCompleted();
+        dto.pace = school.getPace();
+        dto.discord = school.getDiscord();
+        dto.notion = school.getNotion();
+        return dto;
     }
 }
