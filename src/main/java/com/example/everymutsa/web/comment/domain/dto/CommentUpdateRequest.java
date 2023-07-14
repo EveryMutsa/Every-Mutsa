@@ -1,7 +1,6 @@
 package com.example.everymutsa.web.comment.domain.dto;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 public class CommentUpdateRequest {
