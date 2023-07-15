@@ -3,6 +3,7 @@ package com.example.everymutsa.web.post.domain.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.everymutsa.common.BaseEntity;
 import com.example.everymutsa.web.board.domain.entity.BoardEntity;
 import com.example.everymutsa.web.comment.domain.entity.Comment;
 import com.example.everymutsa.web.member.domain.Member;
@@ -25,7 +26,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Post {
+public class Post extends BaseEntity {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -69,10 +70,6 @@ public class Post {
 		post.setHeart(postParam.getHeart());
 		return post;
 	}
-
-	/*
-	created_at, updated_at : BaseEntity 로 상속받을 예정
-	 */
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "board_id")
