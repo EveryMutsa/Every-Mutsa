@@ -1,14 +1,24 @@
 package com.example.everymutsa.web.post.domain.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.example.everymutsa.common.BaseEntity;
+import com.example.everymutsa.web.board.domain.entity.BoardEntity;
+import com.example.everymutsa.web.comment.domain.entity.Comment;
+import com.example.everymutsa.web.member.domain.Member;
 import com.example.everymutsa.web.post.domain.dto.PostParam;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +26,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Post {
+public class Post extends BaseEntity {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -61,16 +71,14 @@ public class Post {
 		return post;
 	}
 
-	/*
-	created_at, updated_at : BaseEntity 로 상속받을 예정
-	 */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "board_id")
+	private BoardEntity board;
 
-	// @ManyToOne
-	// private Board board;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "member_id")
+	private Member member;
 
-	// @ManyToOne
-	// private User user;
-
-	// @OneToMany(mappedBy = "comment")
-	// private List<Comment> comments = new ArrayList<>();
+	@OneToMany(mappedBy = "comment")
+	private List<Comment> comments = new ArrayList<>();
 }
