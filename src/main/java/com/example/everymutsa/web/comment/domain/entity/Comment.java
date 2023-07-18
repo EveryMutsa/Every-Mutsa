@@ -43,11 +43,11 @@ public class Comment extends BaseEntity {
 
 	// TODO 나머지는 연관관계이기 때문에 이후에 작성
 
-	// @ManyToOne(fetch = FetchType.LAZY)
-	// @JoinColumn(name = "post_id")
-	// private Post post;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "post_id")
+	private Post post;
 
-	// @ManyToOne(fetch = FetchType.LAZY)
-	// @JoinColumn(name = "member_id")
-	// private Member member;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "member_id")
+	private Member member;
 }
