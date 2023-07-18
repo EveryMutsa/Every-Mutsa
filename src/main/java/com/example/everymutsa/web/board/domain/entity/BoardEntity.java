@@ -1,21 +1,20 @@
 package com.example.everymutsa.web.board.domain.entity;
 
+import com.example.everymutsa.common.BaseEntity;
 import com.example.everymutsa.web.board.domain.enums.BoardType;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.example.everymutsa.web.post.domain.entity.Post;
+import com.example.everymutsa.web.school.domain.entity.School;
+import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
 @Table(name = "board")
-public class BoardEntity {
+public class BoardEntity extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,15 +29,10 @@ public class BoardEntity {
 	@Enumerated(EnumType.STRING)
 	private BoardType type;
 
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "school_id")
+	private School school;
+
+	@OneToMany(mappedBy = "board")
+	private List<Post> posts = new ArrayList<>();
 }
-
-/*
-created_at : BaseEntity 로 상속받을 예정
-*/
-
-//	@ManyToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "school_id")
-//	private School school;
-
-// @OneToMany(mappedBy = "board")
-// private List<Post> posts = new ArrayList<>();
