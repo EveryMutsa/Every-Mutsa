@@ -1,17 +1,28 @@
 package com.example.everymutsa.web.member.domain;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.example.everymutsa.common.BaseEntity;
+import com.example.everymutsa.web.comment.domain.entity.Comment;
+import com.example.everymutsa.web.post.domain.entity.Post;
+import com.example.everymutsa.web.school.domain.entity.School;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,7 +32,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @Table(name = "member")
-public class Member {
+public class Member extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +49,16 @@ public class Member {
 	private String hashedProfile;
 	@Enumerated(EnumType.STRING)
 	private Role role;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "school_id", nullable = false)
+	private School school;
+
+	@OneToMany(mappedBy = "member")
+	private List<Post> posts = new ArrayList<>();
+
+	@OneToMany(mappedBy = "member")
+	private List<Comment> comments = new ArrayList<>();
 
 	public void changeProfile(String hashedProfile) {
 		this.hashedProfile = hashedProfile;
