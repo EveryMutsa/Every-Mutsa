@@ -1,50 +1,62 @@
 package com.example.everymutsa.web.school.domain.entity;
 
-import com.example.everymutsa.common.BaseEntity;
-import com.example.everymutsa.web.school.domain.dto.SchoolDto;
-import jakarta.persistence.*;
-import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
-
 import java.time.Instant;
+
+import com.example.everymutsa.common.BaseEntity;
+import com.example.everymutsa.web.school.domain.dto.SchoolUpdate;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class School extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "school_id")
-    // Default Value
-    private Long id;
-    @Column(length = 32)
-    private String name;
-    @Column
-    private Instant period; // LocalDateTime 종료일
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "school_id")
+	// Default Value
+	private Long id;
 
-    @ColumnDefault("0")
-    private Integer total; // 출석한 총 학생수
-    @ColumnDefault("0")
-    private Integer completed; // 실습 완료한 학생 수
-    @ColumnDefault("50")
-    private Integer pace; // 수업 속도
+	private String name;
 
-    // Default Value
-    @Column(length = 255)
-    private String discord;
-    @Column(length = 255)
-    private String notion;
+	private Instant endDate; // LocalDateTime 종료일
 
-    public static School toEntity(SchoolDto dto) {
-        School school = new School();
-        school.setId(dto.getId());
-        school.setName(dto.getName());
-        school.setPeriod(dto.getPeriod());
-        school.setTotal(dto.getTotal());
-        school.setCompleted(dto.getCompleted());
-        school.setPace(dto.getPace());
-        school.setDiscord(dto.getDiscord());
-        school.setNotion(dto.getNotion());
-        return school;
-    }
+	private Integer attendance;
+
+	private Integer ready;
+
+	private Integer pace;
+
+	private String discord;
+	private String notion;
+
+	public void changePeriod(Instant endDate) {
+		this.endDate = endDate;
+	}
+
+	public void updateStatus(SchoolUpdate update) {
+		this.attendance = update.getAttendance();
+		this.ready = update.getReady();
+		this.pace = update.getPace();
+	}
+
+	@Builder
+	public School(String name, Instant endDate, Integer attendance, Integer ready, Integer pace, String discord,
+		String notion) {
+		this.name = name;
+		this.endDate = endDate;
+		this.attendance = attendance;
+		this.ready = ready;
+		this.pace = pace;
+		this.discord = discord;
+		this.notion = notion;
+	}
 }

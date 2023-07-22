@@ -27,7 +27,6 @@ public class Log extends BaseEntity {
 	private School school;
 
 
-
 	public static Log fromDto(LogRequest request){
 		Log log = new Log();
 		log.id = request.getId();
@@ -37,9 +36,14 @@ public class Log extends BaseEntity {
 
 	public void setContents(LogRequest request){
 		this.content = request.getContent();
+  }
+	public void setSchool(School school) {
+		this.school = school;
 	}
 
-	public void setSchool(School school){
+	@Builder
+	public Log(String content, School school) {
+		this.content = content;
 		this.school = school;
 	}
 }
