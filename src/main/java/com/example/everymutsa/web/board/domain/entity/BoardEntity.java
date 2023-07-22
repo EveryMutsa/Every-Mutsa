@@ -29,7 +29,7 @@ public class BoardEntity extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	private BoardType type;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "school_id")
 	private School school;
 
