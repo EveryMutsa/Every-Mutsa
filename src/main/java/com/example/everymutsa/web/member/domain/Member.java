@@ -60,6 +60,10 @@ public class Member extends BaseEntity {
 	@OneToMany(mappedBy = "member")
 	private List<Comment> comments = new ArrayList<>();
 
+	public void registerSchool(School school) {
+		this.school = school;
+	}
+
 	public void changeProfile(String hashedProfile) {
 		this.hashedProfile = hashedProfile;
 	}
