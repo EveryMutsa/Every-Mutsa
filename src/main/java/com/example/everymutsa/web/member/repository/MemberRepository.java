@@ -16,7 +16,13 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 	void deleteByEmail(String email);
 
 	default Member findByEmailOrThrow(String email) {
-		return findByEmail(email).orElseThrow(() -> new EntityNotFoundException(ErrorCode.USER_NOT_FOUND));
+		return findByEmail(email)
+			.orElseThrow(() -> new EntityNotFoundException(ErrorCode.ENTITY_NOT_FOUND));
+	}
+
+	default Member findByIdOrThrow(Long id) {
+		return findById(id)
+			.orElseThrow(() -> new EntityNotFoundException(ErrorCode.ENTITY_NOT_FOUND));
 	}
 
 }
