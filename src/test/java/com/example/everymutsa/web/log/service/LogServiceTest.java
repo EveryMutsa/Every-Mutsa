@@ -38,15 +38,15 @@ class LogServiceTest {
 
 	@Test
 	void save() {
-		Log log = new Log();
-		log.setContent("메세지");
+		Log log = Log.builder().build();
+		log.changeContent("메세지");
 		System.out.println(logService.save(log));
 	}
 
 	@Test
 	void update() {
 		Log log = logService.findOne(5L);
-		log.setContent("내용 수정");
+		log.changeContent("내용 수정");
 		logService.update(log);
 		System.out.println(logService.findOne(5L).getCreatedAt());
 		System.out.println(logService.findOne(5L).getUpdatedAt());
