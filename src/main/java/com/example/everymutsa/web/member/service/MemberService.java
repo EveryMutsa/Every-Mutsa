@@ -39,7 +39,7 @@ public class MemberService {
 
 	public Member findById(Long id) {
 		return userRepository.findById(id)
-			.orElseThrow(() -> new EntityNotFoundException(ErrorCode.USER_NOT_FOUND));
+			.orElseThrow(() -> new EntityNotFoundException(ErrorCode.ENTITY_NOT_FOUND));
 	}
 
 	public Member findByEmail(String email) {
@@ -61,7 +61,7 @@ public class MemberService {
 
 	public void remove(String email) {
 		if (userRepository.findByEmail(email).isEmpty()) {
-			throw new EntityNotFoundException(ErrorCode.USER_NOT_FOUND);
+			throw new EntityNotFoundException(ErrorCode.ENTITY_NOT_FOUND);
 		}
 		userRepository.deleteByEmail(email);
 	}
