@@ -29,7 +29,6 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("/school")
 @RequiredArgsConstructor
-@PreAuthorize("hasRole('ROLE_MANAGER')")
 public class SchoolController {
 
 	private final SchoolService schoolService;
@@ -44,6 +43,7 @@ public class SchoolController {
 		return ResponseEntity.ok(schoolService.readAll());
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping
 	public ResponseEntity<Void> create(@RequestBody SchoolRegister dto) {
 		return ResponseEntity
@@ -51,6 +51,7 @@ public class SchoolController {
 			.build();
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping("/{id}")
 	public ResponseEntity<Void> changeEndDate(
 		@PathVariable Long id,
@@ -60,6 +61,7 @@ public class SchoolController {
 		return ResponseEntity.ok().build();
 	}
 
+	@PreAuthorize("hasRole('ROLE_MANAGER')")
 	@PatchMapping("/{id}")
 	public ResponseEntity<Void> renewStatus(
 		@PathVariable Long id,
@@ -69,6 +71,7 @@ public class SchoolController {
 		return ResponseEntity.ok().build();
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> delete(
 		@PathVariable Long id
