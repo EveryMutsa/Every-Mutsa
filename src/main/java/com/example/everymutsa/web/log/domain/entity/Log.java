@@ -1,22 +1,13 @@
 package com.example.everymutsa.web.log.domain.entity;
 
 import com.example.everymutsa.common.BaseEntity;
-import com.example.everymutsa.web.log.domain.dto.LogDto;
-import com.example.everymutsa.web.school.domain.entity.School;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.example.everymutsa.web.log.domain.dto.LogRequest;
+import com.example.everymutsa.web.school.domain.entity.School;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
 @Getter
@@ -27,24 +18,25 @@ public class Log extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "content")
+	@Column
 	private String content;
 
+	@JsonIgnoreProperties({"hibernateLazyInitializer"})
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "school_id")
 	private School school;
 
-	public static Log fromDto(LogDto request) {
+
+	public static Log fromDto(LogRequest request){
 		Log log = new Log();
 		log.id = request.getId();
 		log.content = request.getContent();
 		return log;
 	}
 
-	public void changeContent(String content) {
-		this.content = content;
-	}
-
+	public void setContents(LogRequest request){
+		this.content = request.getContent();
+  }
 	public void setSchool(School school) {
 		this.school = school;
 	}

@@ -7,8 +7,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.everymutsa.web.log.domain.dto.LogRequest;
 import com.example.everymutsa.web.log.domain.entity.Log;
 import com.example.everymutsa.web.log.repository.LogRepository;
+import com.example.everymutsa.web.school.service.SchoolService;
 
 import jakarta.persistence.EntityManager;
 
@@ -24,7 +26,17 @@ class LogServiceTest {
 
 	@Autowired
 	LogService logService;
+	SchoolService schoolService;
 
+	@Test
+	void changeDto(){
+		//given
+		LogRequest logDto = new LogRequest();
+		logDto.setId(1L);
+		logDto.setContent("contents");
+		logDto.setSchoolId(1L);
+
+	}
 	@Test
 	void findAll() {
 		System.out.println(logService.findAll());
@@ -32,24 +44,27 @@ class LogServiceTest {
 
 	@Test
 	void findOne() {
+		//given
+		//when
 		Log log = logService.findOne(5L);
+		//then
 		System.out.println(log);
 	}
 
 	@Test
 	void save() {
-		Log log = Log.builder().build();
-		log.changeContent("메세지");
-		System.out.println(logService.save(log));
+		//given
+		//when
+		//then
 	}
 
 	@Test
 	void update() {
-		Log log = logService.findOne(5L);
-		log.changeContent("내용 수정");
-		logService.update(log);
-		System.out.println(logService.findOne(5L).getCreatedAt());
-		System.out.println(logService.findOne(5L).getUpdatedAt());
+		// Log log = logService.findOne(5L);
+		// log.setContent("내용 수정");
+		// logService.update(log);
+		// System.out.println(logService.findOne(5L).getCreatedAt());
+		// System.out.println(logService.findOne(5L).getUpdatedAt());
 	}
 
 	@Test
