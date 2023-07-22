@@ -1,21 +1,26 @@
 package com.example.everymutsa.web.comment.service;
 
-import java.util.List;
-import java.util.Optional;
-
+import com.example.everymutsa.common.exception.InvalidValueException;
+import com.example.everymutsa.web.member.domain.Member;
+import com.example.everymutsa.web.member.repository.MemberRepository;
+import com.example.everymutsa.web.post.domain.entity.Post;
+import com.example.everymutsa.web.post.repository.PostRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.example.everymutsa.common.exception.EntityNotFoundException;
 import com.example.everymutsa.common.exception.ErrorCode;
 import com.example.everymutsa.web.comment.domain.dto.CommentResponse;
-import com.example.everymutsa.web.comment.domain.dto.CommentUpdateRequest;
+import com.example.everymutsa.web.comment.domain.dto.CommentRequest;
 import com.example.everymutsa.web.comment.domain.entity.Comment;
 import com.example.everymutsa.web.comment.repository.CommentRepository;
-import com.example.everymutsa.web.member.domain.Member;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.List;
+
 
 @Service
 @Slf4j
@@ -24,29 +29,83 @@ import lombok.extern.slf4j.Slf4j;
 public class CommentService {
 
 	private final CommentRepository commentRepository;
+	private final PostRepository postRepository;
+	private final MemberRepository memberRepository;
 
 	@Transactional
-	public Long save(String content) {
-		Comment save = commentRepository.save(new Comment(content));
-		return save.getId();
+	public CommentResponse save(Long pid, CommentRequest request, String email) {
+		Comment saveComment = Comment.fromDto(request);
+		saveComment.setPost(postRepository.findBYIdOrThrow(pid));
+		saveComment.setMember(memberRepository.findByEmailOrThrow(email));
+		if(request.getParentId() != null){
+			Comment parent = commentRepository.findByIdOrThrow(request.getParentId());
+			saveComment.setDepth(parent.getDepth()+1);
+			saveComment.setParentComment(parent);
+		}
+
+		return CommentResponse.fromEntity(commentRepository.save(saveComment));
 	}
 
-	public CommentResponse findById(Long id) {
-		Comment findComment = commentRepository.findById(id).
-			orElseThrow(()-> new EntityNotFoundException(ErrorCode.COMMENT_NOT_FOUND));
-
-		return new CommentResponse(findComment);
-	}
-
-	@Transactional
-	public CommentResponse update(Long id, CommentUpdateRequest commentUpdateRequest) {
+	public CommentResponse getOne(Long id, Long pid){
 		Comment comment = commentRepository.findByIdOrThrow(id);
-		comment.update(commentUpdateRequest.getContent());
-		return new CommentResponse(comment);
+		isRightPid(pid, comment);
+		return CommentResponse.fromEntity(comment);
+	}
+	//TODO parent 정렬
+	public Page<CommentResponse> getAllByPostId(Long pid, int pageNo, int pageSize){
+		Pageable pageable = PageRequest.of(pageNo, pageSize);
+		Page<CommentResponse> comments = commentRepository.findByPost(pid, pageable).map(CommentResponse :: fromEntity);
+		for (CommentResponse comment : comments.getContent()) {
+			getAllReplies(comment);
+		}
+		return comments;
+	}
+
+	public Page<CommentResponse> getAllByMemberId(Long mid, int pageNo, int pageSize){
+		Pageable pageable = PageRequest.of(pageNo, pageSize);
+		Page<CommentResponse> comments = commentRepository.findByMember(mid, pageable).map(CommentResponse :: fromEntity);
+
+		for (CommentResponse comment : comments.getContent()) {
+			getAllReplies(comment);
+		}
+
+		return comments;
+	}
+
+	private void getAllReplies(CommentResponse response) {
+		List<CommentResponse> replies = getReplies(response.getId());
+		response.setReplies(replies);
+		for (CommentResponse reply : replies) {
+			getAllReplies(reply); // 재귀 호출
+		}
+	}
+
+	private List<CommentResponse> getReplies(Long commentId) {
+		return commentRepository.findByParentCommentId(commentId).stream().map(CommentResponse::fromEntity).toList();
 	}
 
 	@Transactional
-	public void delete(Long id) {
-		commentRepository.deleteById(id);
+	public CommentResponse update(Long id, Long pid, CommentRequest request, String email) {
+		Comment comment = commentRepository.findByIdOrThrow(id);
+		isRightPid(pid, comment);
+		isRightUser(email, comment);
+		comment.update(request);
+		return CommentResponse.fromEntity(comment);
+	}
+
+	@Transactional
+	public void delete(Long id, Long pid, String email) {
+		Comment comment = commentRepository.findByIdOrThrow(id);
+		isRightPid(pid, comment);
+		isRightUser(email, comment);
+		comment.delete();
+	}
+
+	private void isRightPid(Long pid, Comment comment){
+		if(!comment.getPost().getId().equals(pid)) throw new InvalidValueException(ErrorCode.COMMENT_NOT_MATCHED_POST);
+	}
+
+	private void isRightUser(String email, Comment comment){
+		if(! comment.getMember().equals(memberRepository.findByEmailOrThrow(email))) throw new InvalidValueException(ErrorCode.COMMENT_NOT_YOURS);
 	}
 }

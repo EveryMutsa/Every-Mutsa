@@ -19,11 +19,11 @@ public enum ErrorCode {
 	UNSUPPORTED_OAUTH2_PROVIDER(HttpStatus.NOT_ACCEPTABLE, "AU_003", "지원하지 않는 로그인 수단입니다."),
 	SERIALIZE_FAILURE(HttpStatus.NOT_IMPLEMENTED, "I_001", "직렬화 실패"),
 	DESERIALIZE_FAILURE(HttpStatus.NOT_IMPLEMENTED, "I_002", "역직렬화 실패"),
+	LOG_NOT_FOUND(HttpStatus.NOT_FOUND, "L_001", "해당 로그를 찾을 수 없습니다."),
 	COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "C_001", "댓글을 찾을 수 없습니다."),
-	LOG_NOT_FOUND(HttpStatus.NOT_FOUND, "L_001", "로그을 찾을 수 없습니다."),
-	SCHOOL_NOT_FOUND(HttpStatus.NOT_FOUND, "S_001", "스쿨을 찾을 수 없습니다."),
-	;
-
+	COMMENT_NOT_MATCHED_POST(HttpStatus.BAD_REQUEST, "C_002", "해당 게시글의 댓글이 아닙니다."),
+	COMMENT_NOT_YOURS(HttpStatus.NOT_ACCEPTABLE, "C_003", "사용자의 댓글이 아닙니다."),
+	POST_NOT_FOUND(HttpStatus.BAD_REQUEST, "P_001", "게시글을 찾을 수 없습니다.");
 
 	ErrorCode(HttpStatus httpStatus, String code, String message) {
 		this.httpStatus = httpStatus;

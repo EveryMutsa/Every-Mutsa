@@ -3,6 +3,7 @@ package com.example.everymutsa.web.comment.domain.entity;
 import java.time.Instant;
 
 import com.example.everymutsa.common.BaseEntity;
+import com.example.everymutsa.web.comment.domain.dto.CommentRequest;
 import com.example.everymutsa.web.member.domain.Member;
 import com.example.everymutsa.web.post.domain.entity.Post;
 
@@ -32,16 +33,26 @@ public class Comment extends BaseEntity {
 	@Column(columnDefinition = "TEXT")
 	private String content;
 
+	private Integer depth;
+	private Boolean deleted;
+
 	@Builder
-	public Comment(String content) {
-		this.content = content;
+	public static Comment fromDto(CommentRequest request) {
+		Comment comment = new Comment();
+		comment.content = request.getContent();
+		comment.deleted = request.isDeleted();
+		comment.depth = request.getDepth();
+		return comment;
+	}
+	public void update(CommentRequest request) {
+		this.content = request.getContent();
 	}
 
-	public void update(String content) {
-		this.content = content;
+	public void delete() {
+		this.content = "삭제된 댓글입니다.";
+		this.deleted = true;
 	}
 
-	// TODO 나머지는 연관관계이기 때문에 이후에 작성
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "post_id")
@@ -50,4 +61,24 @@ public class Comment extends BaseEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id")
 	private Member member;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "parent_id") // 셀프조인을 위한 조인 컬럼
+	private Comment parentComment;
+
+	public void setPost(Post post) {
+		this.post = post;
+	}
+
+	public void setMember(Member member) {
+		this.member = member;
+	}
+
+	public void setParentComment(Comment parentComment) {
+		this.parentComment = parentComment;
+	}
+
+	public void setDepth(Integer depth) {
+		this.depth = depth;
+	}
 }
