@@ -1,47 +1,55 @@
 package com.example.everymutsa.web.school.service;
 
-import com.example.everymutsa.web.school.domain.dto.SchoolDto;
-import com.example.everymutsa.web.school.domain.entity.School;
-import com.example.everymutsa.web.school.repository.SchoolRepository;
-import lombok.RequiredArgsConstructor;
+import java.time.Instant;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import com.example.everymutsa.web.school.domain.dto.SchoolMapper;
+import com.example.everymutsa.web.school.domain.dto.SchoolRegister;
+import com.example.everymutsa.web.school.domain.dto.SchoolResponse;
+import com.example.everymutsa.web.school.domain.dto.SchoolUpdate;
+import com.example.everymutsa.web.school.domain.entity.School;
+import com.example.everymutsa.web.school.repository.SchoolRepository;
 
+import lombok.RequiredArgsConstructor;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class SchoolService {
-    private final SchoolRepository schoolRepository;
+	private final SchoolRepository schoolRepository;
+	private final SchoolMapper schoolMapper;
 
-    public School findById(Long id) {
-        return schoolRepository.findById(id)
-                .orElseThrow();
-    }
+	public List<SchoolResponse> readAll() {
+		return schoolRepository.findAll().stream()
+			.map(schoolMapper::toDto)
+			.collect(Collectors.toList());
+	}
 
-    public List<School> findAllById(Long id) {
-        return schoolRepository.findAllById(id);
-    }
+	public SchoolResponse readOne(Long id) {
+		return schoolMapper.toDto(schoolRepository.findByIdOrThrow(id));
+	}
 
-    // save
-    @Transactional
-    public Long save(SchoolDto dto) {
-        School school = School.toEntity(dto);
-        schoolRepository.save(school);
-        return school.getId();
-    }
+	// save
 
-    @Transactional
-    public SchoolDto update(Long id, SchoolDto dto) {
-        findById(id);
-        School school = School.toEntity(dto);
-        return SchoolDto.fromEntity(school);
-    }
+	public Long save(SchoolRegister dto) {
+		return schoolRepository.save(schoolMapper.toEntity(dto)).getId();
+	}
 
-    @Transactional
-    public void remove(Long id) {
-        schoolRepository.deleteById(id);
-    }
+	public void updateStatus(Long id, SchoolUpdate dto) {
+		School foundSchool = schoolRepository.findByIdOrThrow(id);
+		foundSchool.updateStatus(dto);
+	}
+
+	public void updateEndDate(Long id, Instant newDate) {
+		School foundSchool = schoolRepository.findByIdOrThrow(id);
+		foundSchool.changePeriod(newDate);
+	}
+
+	public void remove(Long id) {
+		schoolRepository.deleteById(id);
+	}
 }
