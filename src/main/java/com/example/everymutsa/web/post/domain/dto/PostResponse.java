@@ -1,5 +1,6 @@
 package com.example.everymutsa.web.post.domain.dto;
 
+import java.io.File;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -20,18 +21,19 @@ public class PostResponse {
 	private String content;
 	private String code;
 	private String language;
-	private List<MultipartFile> images;
+	private List<File> images;
+	private List<String> preImages;
 	private Integer heart;
 
 	@Builder
-	public static PostResponse fromEntity(Post post, List<MultipartFile> images) {
+	public static PostResponse fromEntity(Post post) {
 		PostResponse postResponse = new PostResponse();
 		postResponse.setId(post.getId());
 		postResponse.setTitle(post.getTitle());
 		postResponse.setContent(post.getContent());
 		postResponse.setCode(post.getCode());
 		postResponse.setLanguage(post.getLanguage());
-		postResponse.setImages(images);
+		postResponse.setPreImages(post.getImageNames());
 		postResponse.setHeart(post.getHeart());
 		return postResponse;
 	}
