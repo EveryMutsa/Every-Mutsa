@@ -68,7 +68,7 @@ public class CommentController {
             @PathVariable Long pid,
             @AuthenticationPrincipal User userDetails){
         String email = userDetails.getUsername();
-        commentService.delete(id, pid, email);
+        commentService.remove(id, pid, email);
 
         return ResponseEntity.ok("Deletion successful");
     }

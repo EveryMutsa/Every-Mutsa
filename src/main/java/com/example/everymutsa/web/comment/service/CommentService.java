@@ -91,7 +91,7 @@ public class CommentService {
 	}
 
 	@Transactional
-	public void delete(Long id, Long pid, String email) {
+	public void remove(Long id, Long pid, String email) {
 		Comment comment = commentRepository.findByIdOrThrow(id);
 		isRightPid(pid, comment);
 		isRightUser(email, comment);
