@@ -10,7 +10,6 @@ import com.example.everymutsa.common.exception.ErrorCode;
 import com.example.everymutsa.web.board.domain.entity.BoardEntity;
 import com.example.everymutsa.web.member.domain.Member;
 import com.example.everymutsa.web.post.domain.entity.Post;
-import com.example.everymutsa.web.school.domain.entity.School;
 
 public interface PostRepository extends JpaRepository<Post,Long> {
 
