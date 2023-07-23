@@ -44,7 +44,7 @@ public class CommentService {
 		return CommentResponse.fromEntity(commentRepository.save(saveComment));
 	}
 
-	public CommentResponse getOne(Long id, Long pid){
+	public CommentResponse readOne(Long id, Long pid){
 		Comment comment = commentRepository.findByIdOrThrow(id);
 		isRightPid(pid, comment);
 		return CommentResponse.fromEntity(comment);

@@ -37,7 +37,7 @@ public class CommentController {
     /** comment id로 출력 */
     @GetMapping("/{id}/posts/{pid}")
     public CommentResponse getComment(@PathVariable Long id, @PathVariable Long pid){
-        return commentService.getOne(id, pid);
+        return commentService.readOne(id, pid);
     }
 
     /** comment 저장  : userDetails 필요 */
