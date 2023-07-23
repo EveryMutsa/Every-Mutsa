@@ -1,9 +1,7 @@
 package com.example.everymutsa.web.comment.service;
 
 import com.example.everymutsa.common.exception.InvalidValueException;
-import com.example.everymutsa.web.member.domain.Member;
 import com.example.everymutsa.web.member.repository.MemberRepository;
-import com.example.everymutsa.web.post.domain.entity.Post;
 import com.example.everymutsa.web.post.repository.PostRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
