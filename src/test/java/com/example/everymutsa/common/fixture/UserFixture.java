@@ -12,6 +12,7 @@ public class UserFixture {
 	public static final Long TEST_ID = 1L;
 	public static final String TEST_EMAIL = "test@test.com";
 	public static final String TEST_PASSWORD = "test123456";
+	public static final String TEST_ENCODED_PASSWORD = "$2a$12$jMSlbfo570yEfE0Rl13L6OMyBZcwUPKj8uTWSzUx/.EbP.HtK68Zq";
 	public static final String TEST_NAME = "testUser";
 	public static final String TEST_NICK_NAME = "hireo";
 	public static final Role TEST_ROLE = Role.STUDENT;
@@ -46,6 +47,7 @@ public class UserFixture {
 	}
 
 	public static final SignUpRequest TEST_USER_REQUEST = SignUpRequest.builder()
+		.schoolId(TEST_ID)
 		.name(TEST_NAME)
 		.email(TEST_EMAIL)
 		.password(TEST_PASSWORD)

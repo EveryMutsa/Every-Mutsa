@@ -39,7 +39,7 @@ public class SchoolController {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<SchoolResponse>> readAllById() {
+	public ResponseEntity<List<SchoolResponse>> readAll() {
 		return ResponseEntity.ok(schoolService.readAll());
 	}
 
