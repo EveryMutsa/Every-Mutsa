@@ -19,11 +19,11 @@ public class PostResponse {
 	private Long id;
 	private String title;
 	private String content;
-	private String code;
+	private String sourceCode;
 	private String language;
 	private List<File> images;
 	private List<String> preImages;
-	private Integer heart;
+	private Integer likeCount;
 
 	@Builder
 	public static PostResponse fromEntity(Post post) {
@@ -31,10 +31,10 @@ public class PostResponse {
 		postResponse.setId(post.getId());
 		postResponse.setTitle(post.getTitle());
 		postResponse.setContent(post.getContent());
-		postResponse.setCode(post.getCode());
+		postResponse.setSourceCode(post.getSourceCode());
 		postResponse.setLanguage(post.getLanguage());
 		postResponse.setPreImages(post.getImageNames());
-		postResponse.setHeart(post.getHeart());
+		postResponse.setLikeCount(post.getLikeCount());
 		return postResponse;
 	}
 }

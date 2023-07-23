@@ -17,23 +17,23 @@ public class PostUpdate {
 
 	private String title;
 	private String content;
-	private String code;
+	private String sourceCode;
 	private String language;
 	private List<MultipartFile> images;
-	private Integer heart;
+	private Integer likeCount;
 
 	@Builder
-	public PostUpdate(String title, String content, String code, String language, List<MultipartFile> images,
-		Integer heart) {
+	public PostUpdate(String title, String content, String sourceCode, String language, List<MultipartFile> images,
+		Integer likeCount) {
 		this.title = title;
 		this.content = content;
-		this.code = code;
+		this.sourceCode = sourceCode;
 		this.language = language;
 		this.images = images;
-		this.heart = heart;
+		this.likeCount = likeCount;
 	}
 
 	public Post toDto(String images) {
-		return new Post(this.getTitle(), this.getContent(), this.getCode(), this.getLanguage(), images, this.getHeart());
+		return new Post(this.getTitle(), this.getContent(), this.getSourceCode(), this.getLanguage(), images, this.getLikeCount());
 	}
 }
