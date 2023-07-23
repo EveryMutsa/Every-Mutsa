@@ -8,6 +8,7 @@ import com.example.everymutsa.common.BaseEntity;
 import com.example.everymutsa.web.board.domain.entity.BoardEntity;
 import com.example.everymutsa.web.comment.domain.entity.Comment;
 import com.example.everymutsa.web.member.domain.Member;
+import com.example.everymutsa.web.post.domain.dto.PostRegister;
 import com.example.everymutsa.web.post.domain.dto.PostUpdate;
 
 import jakarta.persistence.Column;
