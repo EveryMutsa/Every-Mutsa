@@ -1,13 +1,15 @@
 package com.example.everymutsa.web.post.domain.entity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.example.everymutsa.common.BaseEntity;
 import com.example.everymutsa.web.board.domain.entity.BoardEntity;
 import com.example.everymutsa.web.comment.domain.entity.Comment;
 import com.example.everymutsa.web.member.domain.Member;
-import com.example.everymutsa.web.post.domain.dto.PostParam;
+import com.example.everymutsa.web.post.domain.dto.PostRegister;
+import com.example.everymutsa.web.post.domain.dto.PostUpdate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,11 +21,13 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Data
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Post extends BaseEntity {
 
@@ -44,31 +48,33 @@ public class Post extends BaseEntity {
 	@Column(length = 32)
 	private String language;
 
-	@Column(length = 128)
-	private String image;
+	@Column(columnDefinition = "TEXT")
+	private String images;
 
 	private Integer heart;
 
-	public static Post createPost(PostParam postParam) {
-		Post post = new Post();
-		post.setTitle(postParam.getTitle());
-		post.setContent(postParam.getContent());
-		post.setCode(postParam.getCode());
-		post.setLanguage(postParam.getLanguage());
-		post.setImage(postParam.getImage());
-		post.setHeart(postParam.getHeart());
-		return post;
+	@Builder
+	public Post(String title, String content, String code, String language, String images, Integer heart) {
+		this.title = title;
+		this.content = content;
+		this.code = code;
+		this.language = language;
+		this.images = images;
+		this.heart = heart;
 	}
 
-	public static Post updateByParam(Post post, PostParam postParam) {
+	public void update(PostUpdate postUpdate, String images) {
 
-		post.setTitle(postParam.getTitle());
-		post.setContent(postParam.getContent());
-		post.setCode(postParam.getCode());
-		post.setLanguage(postParam.getLanguage());
-		post.setImage(postParam.getImage());
-		post.setHeart(postParam.getHeart());
-		return post;
+		this.title = postUpdate.getTitle();
+		this.content = postUpdate.getContent();
+		this.code = postUpdate.getCode();
+		this.language = postUpdate.getLanguage();
+		this.images = images;
+		this.heart = postUpdate.getHeart();
+	}
+
+	public List<String> getImageNames() {
+		return Arrays.stream(images.split(",")).toList();
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
