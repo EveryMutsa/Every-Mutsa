@@ -35,7 +35,7 @@ public class CommentService {
 	@Transactional
 	public CommentResponse save(Long pid, CommentRequest request, String email) {
 		Comment saveComment = Comment.fromDto(request);
-		saveComment.setPost(postRepository.findBYIdOrThrow(pid));
+		saveComment.setPost(postRepository.findByIdOrThrow(pid));
 		saveComment.setMember(memberRepository.findByEmailOrThrow(email));
 		if(request.getParentId() != null){
 			Comment parent = commentRepository.findByIdOrThrow(request.getParentId());
@@ -51,8 +51,7 @@ public class CommentService {
 		isRightPid(pid, comment);
 		return CommentResponse.fromEntity(comment);
 	}
-	//TODO parent 정렬
-	public Page<CommentResponse> getAllByPostId(Long pid, int pageNo, int pageSize){
+	public Page<CommentResponse> readAllByPostId(Long pid, int pageNo, int pageSize){
 		Pageable pageable = PageRequest.of(pageNo, pageSize);
 		Page<CommentResponse> comments = commentRepository.findByPost(pid, pageable).map(CommentResponse :: fromEntity);
 		for (CommentResponse comment : comments.getContent()) {
@@ -61,7 +60,7 @@ public class CommentService {
 		return comments;
 	}
 
-	public Page<CommentResponse> getAllByMemberId(Long mid, int pageNo, int pageSize){
+	public Page<CommentResponse> readAllByMemberId(Long mid, int pageNo, int pageSize){
 		Pageable pageable = PageRequest.of(pageNo, pageSize);
 		Page<CommentResponse> comments = commentRepository.findByMember(mid, pageable).map(CommentResponse :: fromEntity);
 

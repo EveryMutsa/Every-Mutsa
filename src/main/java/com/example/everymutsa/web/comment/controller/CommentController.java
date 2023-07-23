@@ -23,7 +23,7 @@ public class CommentController {
     public Page<CommentResponse> getAllCommentByPost(@PathVariable Long pid,
                                                @RequestParam(name = "no", defaultValue = "0") int pageNo,
                                                @RequestParam(name = "size", defaultValue = "20") int pageSize){
-        return commentService.getAllByPostId(pid, pageNo, pageSize);
+        return commentService.readAllByPostId(pid, pageNo, pageSize);
     }
 
     /** post Id로 전체 출력 PAGE*/
@@ -31,7 +31,7 @@ public class CommentController {
     public Page<CommentResponse> getAllCommentByMember(@PathVariable Long uid,
                                                @RequestParam(name = "no", defaultValue = "0") int pageNo,
                                                @RequestParam(name = "size", defaultValue = "20") int pageSize){
-        return commentService.getAllByMemberId(uid, pageNo, pageSize);
+        return commentService.readAllByMemberId(uid, pageNo, pageSize);
     }
 
     /** comment id로 출력 */
