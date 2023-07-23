@@ -22,7 +22,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -43,7 +42,7 @@ public class Post extends BaseEntity {
 	private String content;
 
 	@Column(columnDefinition = "TEXT")
-	private String code;
+	private String sourceCode;
 
 	@Column(length = 32)
 	private String language;
@@ -51,26 +50,26 @@ public class Post extends BaseEntity {
 	@Column(columnDefinition = "TEXT")
 	private String images;
 
-	private Integer heart;
+	private Integer likeCount;
 
 	@Builder
-	public Post(String title, String content, String code, String language, String images, Integer heart) {
+	public Post(String title, String content, String sourceCode, String language, String images, Integer likeCount) {
 		this.title = title;
 		this.content = content;
-		this.code = code;
+		this.sourceCode = sourceCode;
 		this.language = language;
 		this.images = images;
-		this.heart = heart;
+		this.likeCount = likeCount;
 	}
 
 	public void update(PostUpdate postUpdate, String images) {
 
 		this.title = postUpdate.getTitle();
 		this.content = postUpdate.getContent();
-		this.code = postUpdate.getCode();
+		this.sourceCode = postUpdate.getSourceCode();
 		this.language = postUpdate.getLanguage();
 		this.images = images;
-		this.heart = postUpdate.getHeart();
+		this.likeCount = postUpdate.getLikeCount();
 	}
 
 	public List<String> getImageNames() {
