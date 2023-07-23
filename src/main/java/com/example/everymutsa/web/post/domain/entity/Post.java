@@ -5,10 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.example.everymutsa.common.BaseEntity;
-import com.example.everymutsa.web.board.domain.entity.BoardEntity;
+import com.example.everymutsa.web.board.domain.entity.Board;
 import com.example.everymutsa.web.comment.domain.entity.Comment;
 import com.example.everymutsa.web.member.domain.Member;
-import com.example.everymutsa.web.post.domain.dto.PostRegister;
 import com.example.everymutsa.web.post.domain.dto.PostUpdate;
 
 import jakarta.persistence.Column;
@@ -78,7 +77,7 @@ public class Post extends BaseEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "board_id")
-	private BoardEntity board;
+	private Board board;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id")
