@@ -10,9 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.everymutsa.common.exception.EntityNotFoundException;
-import com.example.everymutsa.web.comment.domain.dto.CommentResponse;
-import com.example.everymutsa.web.comment.domain.dto.CommentUpdateRequest;
 import com.example.everymutsa.web.comment.repository.CommentRepository;
 
 import jakarta.persistence.EntityManager;
