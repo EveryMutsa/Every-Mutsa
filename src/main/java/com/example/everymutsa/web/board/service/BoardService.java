@@ -26,11 +26,11 @@ public class BoardService {
 	private final BoardRepository repository;
 	private final SchoolRepository schoolRepository;
 
-	public BoardDto save(Long schoolId,String boardType, BoardDto dto) {
+	public BoardDto save(Long schoolId, BoardDto dto) {
 		Board entity = new Board();
 
 		entity.setName(dto.getName());
-		entity.setType(BoardType.valueOf(boardType));
+		entity.setType(BoardType.COMMUNITY);
 		entity.setExplain(dto.getExplain());
 
 		School school = schoolRepository.findByIdOrThrow(schoolId);
@@ -71,33 +71,25 @@ public class BoardService {
 		Pageable pageable = PageRequest.of(pageNo,pageSize);
 		Page<Board> boardEntityPage;
 
-		if (boardType.equals(BoardType.NOTICE) || boardType.equals(BoardType.QUESTION)){
+		if (boardType.equals(BoardType.NOTICE.getType()) || boardType.equals(BoardType.QUESTION.getType())){
 			School school = schoolRepository.findByIdOrThrow(schoolId);
-			boardEntityPage = repository.findAllBySchoolAndType(school,boardType,pageable);
+			boardEntityPage = repository.findAllBySchoolAndType(school,BoardType.valueOf(boardType),pageable);
 
 		}else {
-			boardEntityPage = repository.findAllByType(boardType);
+			boardEntityPage = repository.findAllByType(BoardType.valueOf(boardType),pageable);
 		}
 
 		Page<BoardDto> boardDtoPage = boardEntityPage.map(BoardDto::fromEntity);
 		return boardDtoPage;
 	}
 
-//	public BoardDto readOne(Long schoolId, Long id, String boardType) {
-//		Board entity = repository.findByIdOrThrow(id);
-//
-//		School school = schoolRepository.findByIdOrThrow(schoolId);
-//		if (entity.getSchool() == school)
-//			return BoardDto.fromEntity(repository.findByIdOrThrow(id));
-//
-//	}
+	public BoardDto readOne(Long id) {
+		return BoardDto.fromEntity(repository.findByIdOrThrow(id));
+	}
 
 	public BoardDto update(Long id, BoardDto dto) {
-		Optional<Board> optionalBoard = repository.findById(id);
-		if (optionalBoard.isEmpty()) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-		}
-		Board entity = optionalBoard.get();
+
+		Board entity = repository.findByIdOrThrow(id);
 		entity.setName(dto.getName());
 		entity.setExplain(dto.getExplain());
 		return BoardDto.fromEntity(repository.save(entity));
