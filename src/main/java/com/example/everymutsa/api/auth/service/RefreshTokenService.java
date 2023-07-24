@@ -15,23 +15,23 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class RefreshTokenService {
 
-	private final RedisTemplate<String, String> redisTemplate;
+	private final RedisTemplate<String, String> refreshTokenRedisTemplate;
 	private final JwtTokenProvider tokenProvider;
 
 	public void save(String email, String token) {
-		redisTemplate.opsForValue()
+		refreshTokenRedisTemplate.opsForValue()
 			.set(email, token, tokenProvider.REFRESH_TOKEN_EXPIRATION_TIME, TimeUnit.MILLISECONDS);
 	}
 
 	public void deleteTokenByEmail(String email) {
-		redisTemplate.delete(email);
+		refreshTokenRedisTemplate.delete(email);
 	}
 
 	public boolean validateToken(String token) {
 		if (!tokenProvider.validateToken(token)) {
 			return false;
 		}
-		String foundToken = redisTemplate.opsForValue().get(tokenProvider.getUsernameFromToken(token));
+		String foundToken = refreshTokenRedisTemplate.opsForValue().get(tokenProvider.getUsernameFromToken(token));
 		return token != null && foundToken.equals(token);
 	}
 
